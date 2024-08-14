@@ -24,3 +24,37 @@ const userInput = [
         },
 ]
 
+function builder() {
+    inquirer.prompt(userInput).then( (res) => {
+        let shape;
+        if (res.shape == "Triangle") {
+            shape = new Triangle()
+            const svg = new SVG()
+            shape.setColor(res.color)
+            svg.renderText(res.name, res.textColor)
+            svg.setShape(shape)
+            return fs.writeFile("logo.svg", svg.render())
+        }
+        else if(res.shape == "Circle")  {
+            shape = new Circle()
+            const svg = new SVG()
+            shape.setColor(res.color)
+            svg.renderText(res.name, res.textColor)
+            svg.setShape(shape)
+            return fs.writeFile("logo.svg", svg.render())
+        }
+        else if(res.shape == "Square")  {
+            shape = new Square()
+            const svg = new SVG()
+            shape.setColor(res.color)
+            svg.renderText(res.name, res.textColor)
+            svg.setShape(shape)
+            return fs.writeFile("logo.svg", svg.render())
+        }
+    })
+    .then(() => {console.log("shape is built")})
+}
+
+builder()
+
+module.exports = builder
