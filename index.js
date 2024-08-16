@@ -1,12 +1,12 @@
 const inquirer = require('inquirer');
-const fs = require('fs');
+const fs = require("fs/promises");
 const {Triangle, Circle, Square} = require("./lib/shapes");
-const { choices } = require('yargs');
+const SVG = require("./lib/shapeBuilder")
 
 const userInput = [
     {
     type: "input",
-    name: "name",
+    name: "message",
     message: "Enter 3 text characters to appear on the logo",
     },
 
@@ -15,6 +15,12 @@ const userInput = [
         name: "shape",
         message: "Choose a shape for your logo",
         choices: ["Triangle", "Circle", "Square"],
+    },
+
+    {
+        type: "input",
+        name: "textColor",
+        message: "Enter a color for the text"
     },
 
     {
@@ -31,24 +37,24 @@ function builder() {
             shape = new Triangle()
             const svg = new SVG()
             shape.setColor(res.color)
-            svg.renderText(res.name, res.textColor)
-            svg.setShape(shape)
+            svg.renderText(res.message, res.textColor)
+            svg.buildLogo(shape)
             return fs.writeFile("logo.svg", svg.render())
         }
         else if(res.shape == "Circle")  {
             shape = new Circle()
             const svg = new SVG()
             shape.setColor(res.color)
-            svg.renderText(res.name, res.textColor)
-            svg.setShape(shape)
+            svg.renderText(res.message, res.textColor)
+            svg.buildLogo(shape)
             return fs.writeFile("logo.svg", svg.render())
         }
         else if(res.shape == "Square")  {
             shape = new Square()
             const svg = new SVG()
             shape.setColor(res.color)
-            svg.renderText(res.name, res.textColor)
-            svg.setShape(shape)
+            svg.renderText(res.message, res.textColor)
+            svg.buildLogo(shape)
             return fs.writeFile("logo.svg", svg.render())
         }
     })
